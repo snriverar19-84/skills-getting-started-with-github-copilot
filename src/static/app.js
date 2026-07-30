@@ -9,14 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const cancelRemoveButton = document.getElementById("cancel-remove-participant");
 
   let pendingRemoval = null;
+  let messageHideTimeoutId = null;
 
   function showMessage(text, kind) {
     messageDiv.textContent = text;
-    messageDiv.className = kind;
+    messageDiv.className = `message ${kind}`;
     messageDiv.classList.remove("hidden");
 
-    setTimeout(() => {
+    if (messageHideTimeoutId !== null) {
+      clearTimeout(messageHideTimeoutId);
+    }
+
+    messageHideTimeoutId = window.setTimeout(() => {
       messageDiv.classList.add("hidden");
+      messageHideTimeoutId = null;
     }, 5000);
   }
 
