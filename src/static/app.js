@@ -48,26 +48,47 @@ document.addEventListener("DOMContentLoaded", () => {
         activityCard.className = "activity-card";
 
         const spotsLeft = details.max_participants - details.participants.length;
+
+        const escapeHtml = (value) =>
+          String(value).replace(/[&<>"']/g, (char) => {
+            switch (char) {
+              case "&":
+                return "&amp;";
+              case "<":
+                return "&lt;";
+              case ">":
+                return "&gt;";
+              case '"':
+                return "&quot;";
+              default:
+                return "&#39;";
+            }
+          });
+
+        const safeActivityName = escapeHtml(name);
+
         const participantsList =
           details.participants.length > 0
             ? details.participants
-                .map(
-                  (participant) => `
+                .map((participant) => {
+                  const safeParticipant = escapeHtml(participant);
+
+                  return `
                     <li class="participant-item">
-                      <span class="participant-email">${participant}</span>
+                      <span class="participant-email">${safeParticipant}</span>
                       <button
                         type="button"
                         class="participant-remove"
-                        data-activity="${name}"
-                        data-email="${participant}"
-                        aria-label="Remove ${participant} from ${name}"
+                        data-activity="${safeActivityName}"
+                        data-email="${safeParticipant}"
+                        aria-label="Remove ${safeParticipant} from ${safeActivityName}"
                         title="Remove participant"
                       >
                         Remove
                       </button>
                     </li>
-                  `
-                )
+                  `;
+                })
                 .join("")
             : '<li class="participants-empty">No participants yet</li>';
 
