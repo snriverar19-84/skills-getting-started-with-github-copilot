@@ -18,17 +18,13 @@ Install dependencies:
 python3 -m pip install -r requirements.txt
 ```
 
-Run the test suite:
+Run the test suite (coverage is enabled by default via `pytest.ini`):
 
-```bash
-pytest
-```
+    pytest
 
-Run tests with coverage:
+Run the test suite without coverage:
 
-```bash
-pytest --cov
-```
+    pytest --no-cov
 
 The repository is configured to report coverage for the `src` package and show missing lines in terminal output.
 
