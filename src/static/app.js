@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function openRemoveParticipantModal(activity, email) {
     pendingRemoval = { activity, email };
-    removeParticipantMessage.textContent = "Do you want to remove this participant form the activity?";
+    removeParticipantMessage.textContent = `Do you want to remove ${email} from ${activity}?`;
     removeParticipantModal.classList.remove("hidden");
     confirmRemoveButton.focus();
   }
